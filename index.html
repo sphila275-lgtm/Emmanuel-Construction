@@ -28,6 +28,8 @@ h2{font-size:clamp(28px,4vw,42px);line-height:1.15;color:var(--navy);margin:10px
 .process{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:32px}.step{border-top:3px solid var(--cyan);padding-top:18px}.step b{color:var(--blue);font-size:13px;letter-spacing:1px}.step h3{color:var(--navy);margin:7px 0}
 .contact{background:#17164f;color:white}.contact h2{color:white}.contact .intro{color:#d5d8ee}.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:30px}.contact-list{display:grid;gap:18px}.contact-item{padding:16px 18px;border:1px solid rgba(255,255,255,.2);border-radius:10px}.contact-item small{display:block;color:#9deaff;text-transform:uppercase;font-weight:800;letter-spacing:1px;font-size:11px}.contact-item a,.contact-item span{display:block;color:white;text-decoration:none;font-weight:700;margin-top:4px;overflow-wrap:anywhere}
 .contact-cta{background:#fff;color:var(--navy);border-radius:16px;padding:28px}.contact-cta h3{font-size:24px;margin:0 0 10px}.contact-cta p{color:var(--muted)}.contact-cta .btn{background:var(--navy);color:white;margin-top:8px}
+
+.contact-cta form{display:grid;gap:8px}.contact-cta label{font-size:13px;font-weight:800;color:var(--navy);margin-top:7px}.contact-cta input,.contact-cta select,.contact-cta textarea{width:100%;font:inherit;padding:11px 12px;border:1px solid #ccd3e1;border-radius:8px;background:#fff;color:var(--ink)}.contact-cta textarea{resize:vertical}.contact-cta form .btn{border:0;cursor:pointer;font:inherit;font-weight:800;text-align:center}.form-note{font-size:12px!important;line-height:1.45;margin-bottom:0}
 footer{background:#101039;color:#c9cce0;text-align:center;padding:22px 24px;font-size:13px}
 @media(max-width:800px){.cards,.process{grid-template-columns:1fr 1fr}.about-grid,.contact-grid{grid-template-columns:1fr}.nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:white;padding:18px 24px;flex-direction:column;align-items:flex-start;border-bottom:1px solid #e8eaf1}.nav-links.open{display:flex}.menu-btn{display:block}}
 @media(max-width:560px){.hero{padding:70px 20px}.cards,.process,.values{grid-template-columns:1fr}section{padding:58px 20px}.nav-inner{padding:12px 18px}.brand{font-size:14px}}
@@ -102,12 +104,51 @@ footer{background:#101039;color:#c9cce0;text-align:center;padding:22px 24px;font
         <div class="contact-item"><small>Email</small><a href="mailto:mzilanyathi649@gmail.com">mzilanyathi649@gmail.com</a></div>
         <div class="contact-item"><small>Address</small><span>No. 403 Yormax Court, 61 Lilly Avenue, Berea, Johannesburg, Gauteng 2194</span></div>
       </div>
-      <div class="contact-cta"><h3>Have a project in mind?</h3><p>Send us an email with a short description of the work you need, your location and your preferred contact details.</p><a class="btn" href="mailto:mzilanyathi649@gmail.com?subject=Project%20Enquiry">Email us about your project</a></div>
+      <div class="contact-cta">
+        <h3>Request a free quote</h3>
+        <p>Fill in your project details. We’ll prepare a message for you to send to us on WhatsApp.</p>
+        <form id="quote-form">
+          <label for="quote-name">Your name</label>
+          <input id="quote-name" name="name" type="text" autocomplete="name" required placeholder="Full name">
+          <label for="quote-phone">Your phone number</label>
+          <input id="quote-phone" name="phone" type="tel" autocomplete="tel" required placeholder="+27...">
+          <label for="quote-location">Project location</label>
+          <input id="quote-location" name="location" type="text" required placeholder="Suburb or town">
+          <label for="quote-service">Type of work</label>
+          <select id="quote-service" name="service" required>
+            <option value="">Choose a service</option>
+            <option>Construction</option>
+            <option>Electrical work</option>
+            <option>Renovations</option>
+            <option>Other / not sure</option>
+          </select>
+          <label for="quote-details">Tell us about your project</label>
+          <textarea id="quote-details" name="details" rows="4" required placeholder="Describe the work you need..."></textarea>
+          <button class="btn" type="submit">Send quote request on WhatsApp</button>
+        </form>
+        <p class="form-note">WhatsApp will open with your message ready to send. No request is sent until you press Send in WhatsApp.</p>
+      </div>
     </div>
   </div>
 </section>
 </main>
 <footer>© <span id="year"></span> Emmanuel Construction &amp; Electrical Projects. All rights reserved.</footer>
-<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+document.getElementById('quote-form').addEventListener('submit',function(event){
+  event.preventDefault();
+  const form=new FormData(this);
+  const message=[
+    'Hello Emmanuel Construction, I would like to request a quote.',
+    '',
+    'Name: '+form.get('name'),
+    'Phone: '+form.get('phone'),
+    'Project location: '+form.get('location'),
+    'Type of work: '+form.get('service'),
+    'Project details: '+form.get('details')
+  ].join('\\n');
+  window.open('https://wa.me/27814469897?text='+encodeURIComponent(message),'_blank','noopener');
+});
+</script>
 </body>
 </html>
