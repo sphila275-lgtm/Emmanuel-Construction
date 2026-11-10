@@ -146,7 +146,7 @@ document.getElementById('quote-form').addEventListener('submit',function(event){
     'Project location: '+form.get('location'),
     'Type of work: '+form.get('service'),
     'Project details: '+form.get('details')
-  ].join('\\n');
+  ].join('\n');
   window.open('https://wa.me/27814469897?text='+encodeURIComponent(message),'_blank','noopener');
 });
 </script>
